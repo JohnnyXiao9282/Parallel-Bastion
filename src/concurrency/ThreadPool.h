@@ -43,4 +43,4 @@ private:
     bool m_stop;
 };
 
-} // namespace Concurrency
+} 
