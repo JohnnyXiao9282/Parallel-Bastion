@@ -31,7 +31,7 @@ private:
     std::unique_ptr<Engine::Renderer> m_renderer;
     std::unique_ptr<Engine::EventBus> m_eventBus;
     GameLoop m_gameLoop;
-    
+    std::unique_ptr<Concurrency::ThreadPool> m_threadPool;
     bool m_shouldQuit;
 };
 

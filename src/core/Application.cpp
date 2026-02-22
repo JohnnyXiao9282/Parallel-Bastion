@@ -11,7 +11,7 @@ Application::Application(const std::string& title, int width, int height)
     
     m_renderer = std::make_unique<Engine::Renderer>(title, width, height);
     m_eventBus = std::make_unique<Engine::EventBus>();
-    
+    m_threadPool = std::make_unique<Concurrency::ThreadPool>(4);
     Utils::Logger::info("Application initialized successfully");
 }
 
@@ -55,6 +55,12 @@ bool Application::pollEvents() {
 
 void Application::fixedUpdate(double dt) {
     (void)dt;
+    // Submit a dummy task to thread pool
+    auto future = m_threadPool->enqueue([] {
+        Utils::Logger::info("ThreadPool task running");
+    });
+    // Optionally wait for completion (for demo)
+    future.get();
 }
 
 void Application::render() {
