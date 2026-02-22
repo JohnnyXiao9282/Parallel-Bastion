@@ -69,4 +69,4 @@ void Application::render() {
     m_renderer->present();
 }
 
-} // namespace Core
+}
