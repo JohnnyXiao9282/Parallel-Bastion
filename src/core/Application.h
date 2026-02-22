@@ -3,6 +3,7 @@
 #include "GameLoop.h"
 #include "../engine/Renderer.h"
 #include "../engine/EventBus.h"
+#include "../concurrency/ThreadPool.h"
 #include <memory>
 #include <string>
 

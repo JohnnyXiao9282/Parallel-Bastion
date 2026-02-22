@@ -21,6 +21,11 @@ target_include_directories(parallel_bastion PRIVATE
     ${SDL2_INCLUDE_DIRS}
 )
 
+# Ensure SDL2 include path for Apple Silicon/Homebrew
+if(EXISTS "/opt/homebrew/include/SDL2")
+    include_directories(/opt/homebrew/include/SDL2)
+endif()
+
 target_link_libraries(parallel_bastion PRIVATE
     ${SDL2_LIBRARIES}
 )
