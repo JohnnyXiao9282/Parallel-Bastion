@@ -55,17 +55,20 @@ bool Application::pollEvents() {
 
 void Application::fixedUpdate(double dt) {
     (void)dt;
-    // Submit a dummy task to thread pool
-    auto future = m_threadPool->enqueue([] {
+    // Submit a dummy task to thread pool (non-blocking demo)
+    m_threadPool->enqueue([] {
         Utils::Logger::info("ThreadPool task running");
     });
-    // Optionally wait for completion (for demo)
-    future.get();
 }
 
 void Application::render() {
     m_renderer->clear(0, 0, 0, 255);
     m_renderer->renderGrid(32);
+    // Draw a simple player rectangle at (5,5) grid cell
+    int cellSize = 32;
+    int px = 5 * cellSize;
+    int py = 5 * cellSize;
+    m_renderer->drawRect(px, py, cellSize, cellSize, 0, 200, 0, 255);
     m_renderer->present();
 }
 
