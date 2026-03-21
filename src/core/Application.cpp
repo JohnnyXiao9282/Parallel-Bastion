@@ -6,14 +6,13 @@
 namespace Core {
 
 Application::Application(const std::string& title, int width, int height)
-    spawnTarget();
     : m_shouldQuit(false)
 {
     Utils::Logger::info("Initializing Application: " + title);
-    
     m_renderer = std::make_unique<Engine::Renderer>(title, width, height);
     m_eventBus = std::make_unique<Engine::EventBus>();
     m_threadPool = std::make_unique<Concurrency::ThreadPool>(4);
+    spawnTarget();
     Utils::Logger::info("Application initialized successfully");
 }
 
@@ -150,10 +149,13 @@ void Application::render() {
     m_renderer->clear(0, 0, 0, 255);
     m_renderer->renderGrid(32);
     int cellSize = 32;
-    // Draw target (red)
+    // Draw target as a large gold square with a black border (bastion-like)
     int tx = m_targetX * cellSize;
     int ty = m_targetY * cellSize;
-    m_renderer->drawRect(tx, ty, cellSize, cellSize, 200, 0, 0, 255);
+    // Filled gold square
+    m_renderer->drawRect(tx+2, ty+2, cellSize*2-4, cellSize*2-4, 220, 180, 30, 255);
+    // Black border
+    m_renderer->drawRect(tx+2, ty+2, cellSize*2-4, cellSize*2-4, 0, 0, 0, 255);
     // Player 1: green
     int px1 = m_playerX * cellSize;
     int py1 = m_playerY * cellSize;
@@ -178,19 +180,15 @@ void Application::render() {
 // Helper: check if a grid cell is occupied by a player
 bool Application::isOccupied(int x, int y) const {
     return (x == m_playerX && y == m_playerY) || (x == m_player2X && y == m_player2Y);
+// Helper: check if a grid cell is occupied by a player
+bool Application::isOccupied(int x, int y) const {
+    return (x == m_playerX && y == m_playerY) || (x == m_player2X && y == m_player2Y);
 }
 
-// Helper: spawn target at random unoccupied cell
+// Helper: spawn target at fixed location for debugging
 void Application::spawnTarget() {
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
-    std::uniform_int_distribution<> distX(0, GRID_W-1);
-    std::uniform_int_distribution<> distY(0, GRID_H-1);
-    do {
-        m_targetX = distX(gen);
-        m_targetY = distY(gen);
-    } while (isOccupied(m_targetX, m_targetY));
-}
+    m_targetX = 5;
+    m_targetY = 5;
 }
 
-}
+} // namespace Core

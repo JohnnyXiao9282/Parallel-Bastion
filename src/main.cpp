@@ -1,4 +1,4 @@
-#include "core/Application.h"
+#include "../core/Application.h"
 #include "utils/Logger.h"
 #include <exception>
 

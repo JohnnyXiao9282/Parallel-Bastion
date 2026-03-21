@@ -1,3 +1,5 @@
+    // Draw a stylized Bastion symbol (target) at grid cell
+    void drawBastionSymbol(int x, int y, int cellSize);
 #pragma once
 
 #include <SDL2/SDL.h>

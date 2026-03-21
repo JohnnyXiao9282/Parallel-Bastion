@@ -1,3 +1,31 @@
+// Draw a stylized Bastion symbol (target) at grid cell
+void Renderer::drawBastionSymbol(int x, int y, int cellSize) {
+    // Draw a gold/yellow filled rectangle with a black border and a 'B' shape using lines
+    int px = x * cellSize;
+    int py = y * cellSize;
+    // Filled rect (gold)
+    SDL_Rect fillRect = { px+2, py+2, cellSize-4, cellSize-4 };
+    SDL_SetRenderDrawColor(m_renderer, 220, 180, 30, 255);
+    SDL_RenderFillRect(m_renderer, &fillRect);
+    // Border (black)
+    SDL_Rect borderRect = { px+2, py+2, cellSize-4, cellSize-4 };
+    SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255);
+    SDL_RenderDrawRect(m_renderer, &borderRect);
+    // Draw a 'B' using lines (black)
+    int cx = px + cellSize/2;
+    int cy = py + cellSize/2;
+    int r = cellSize/4;
+    // Vertical line
+    SDL_RenderDrawLine(m_renderer, px+cellSize/4, py+cellSize/4, px+cellSize/4, py+cellSize*3/4);
+    // Top curve
+    SDL_RenderDrawLine(m_renderer, px+cellSize/4, py+cellSize/4, px+cellSize*3/4, py+cellSize/4);
+    SDL_RenderDrawLine(m_renderer, px+cellSize*3/4, py+cellSize/4, px+cellSize*3/4, py+cellSize/2);
+    SDL_RenderDrawLine(m_renderer, px+cellSize*3/4, py+cellSize/2, px+cellSize/4, py+cellSize/2);
+    // Bottom curve
+    SDL_RenderDrawLine(m_renderer, px+cellSize/4, py+cellSize/2, px+cellSize*3/4, py+cellSize/2);
+    SDL_RenderDrawLine(m_renderer, px+cellSize*3/4, py+cellSize/2, px+cellSize*3/4, py+cellSize*3/4);
+    SDL_RenderDrawLine(m_renderer, px+cellSize*3/4, py+cellSize*3/4, px+cellSize/4, py+cellSize*3/4);
+}
 #include "Renderer.h"
 #include "../utils/Logger.h"
 #include <stdexcept>
