@@ -42,14 +42,41 @@ bool Application::pollEvents() {
         if (event.type == SDL_QUIT) {
             return false;
         }
-        
         if (event.type == SDL_KEYDOWN) {
-            if (event.key.keysym.sym == SDLK_ESCAPE) {
-                return false;
+            switch (event.key.keysym.sym) {
+                // Player 1: Arrow keys
+                case SDLK_ESCAPE:
+                    return false;
+                case SDLK_UP:
+                    if (m_playerY > 0) m_playerY--;
+                    break;
+                case SDLK_DOWN:
+                    m_playerY++;
+                    break;
+                case SDLK_LEFT:
+                    if (m_playerX > 0) m_playerX--;
+                    break;
+                case SDLK_RIGHT:
+                    m_playerX++;
+                    break;
+                // Player 2: WASD
+                case SDLK_w:
+                    if (m_player2Y > 0) m_player2Y--;
+                    break;
+                case SDLK_s:
+                    m_player2Y++;
+                    break;
+                case SDLK_a:
+                    if (m_player2X > 0) m_player2X--;
+                    break;
+                case SDLK_d:
+                    m_player2X++;
+                    break;
+                default:
+                    break;
             }
         }
     }
-    
     return true;
 }
 
@@ -64,11 +91,15 @@ void Application::fixedUpdate(double dt) {
 void Application::render() {
     m_renderer->clear(0, 0, 0, 255);
     m_renderer->renderGrid(32);
-    // Draw a simple player rectangle at (5,5) grid cell
     int cellSize = 32;
-    int px = 5 * cellSize;
-    int py = 5 * cellSize;
-    m_renderer->drawRect(px, py, cellSize, cellSize, 0, 200, 0, 255);
+    // Player 1: green
+    int px1 = m_playerX * cellSize;
+    int py1 = m_playerY * cellSize;
+    m_renderer->drawRect(px1, py1, cellSize, cellSize, 0, 200, 0, 255);
+    // Player 2: blue
+    int px2 = m_player2X * cellSize;
+    int py2 = m_player2Y * cellSize;
+    m_renderer->drawRect(px2, py2, cellSize, cellSize, 0, 0, 200, 255);
     m_renderer->present();
 }
 

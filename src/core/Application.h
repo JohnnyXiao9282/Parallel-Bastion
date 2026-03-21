@@ -34,6 +34,13 @@ private:
     GameLoop m_gameLoop;
     std::unique_ptr<Concurrency::ThreadPool> m_threadPool;
     bool m_shouldQuit;
+
+    // Player 1 (arrow keys) position
+    int m_playerX = 5;
+    int m_playerY = 5;
+    // Player 2 (WASD) position
+    int m_player2X = 10;
+    int m_player2Y = 5;
 };
 
 } // namespace Core
